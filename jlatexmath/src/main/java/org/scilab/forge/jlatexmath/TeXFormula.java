@@ -137,7 +137,8 @@ public class TeXFormula {
         try {
             DefaultTeXFont.registerAlphabet((AlphabetRegistration) Class.forName("org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration").newInstance());
             DefaultTeXFont.registerAlphabet((AlphabetRegistration) Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration").newInstance());
-        } catch (Exception e) { }
+        } catch (Exception e) {
+        }
 
         //setDefaultDPI();
     }
@@ -159,7 +160,7 @@ public class TeXFormula {
     }
 
     public static boolean isRegisteredBlock(Character.UnicodeBlock block) {
-	return externalFontMap.get(block) != null;
+        return externalFontMap.get(block) != null;
     }
 
     public static FontInfos getExternalFont(Character.UnicodeBlock block) {
@@ -189,6 +190,7 @@ public class TeXFormula {
 
     /**
      * Set the DPI of target
+     *
      * @param dpi the target DPI
      */
     public static void setDPITarget(float dpi) {
@@ -214,7 +216,6 @@ public class TeXFormula {
 
     /**
      * Creates an empty TeXFormula.
-     *
      */
     public TeXFormula() {
         parser = new TeXParser("", this, false);
@@ -279,7 +280,6 @@ public class TeXFormula {
 
     /**
      * Creates an empty TeXFormula.
-     *
      */
     protected TeXFormula(TeXParser tp) {
         this.jlmXMLMap = tp.formula.jlmXMLMap;
@@ -304,7 +304,8 @@ public class TeXFormula {
         if (isPartial) {
             try {
                 parser.parse();
-            } catch (Exception e) { }
+            } catch (Exception e) {
+            }
         } else {
             parser.parse();
         }
@@ -394,7 +395,7 @@ public class TeXFormula {
 
     /**
      * @param b true if the fonts should be registered (Java 1.6 only) to be used
-     * with FOP.
+     *          with FOP.
      */
     public static void registerFonts(boolean b) {
         DefaultTeXFontParser.registerFonts(b);
@@ -442,8 +443,8 @@ public class TeXFormula {
      * at the end of the current TeXFormula.
      *
      * @param s the string to be parsed and inserted
-     * @throws ParseException if the string could not be parsed correctly
      * @return the modified TeXFormula
+     * @throws ParseException if the string could not be parsed correctly
      */
     public TeXFormula add(String s) throws ParseException {
         if (s != null && s.length() != 0) {
@@ -490,12 +491,12 @@ public class TeXFormula {
 
     public void setLookAtLastAtom(boolean b) {
         if (root instanceof RowAtom)
-            ((RowAtom)root).lookAtLastAtom = b;
+            ((RowAtom) root).lookAtLastAtom = b;
     }
 
     public boolean getLookAtLastAtom() {
         if (root instanceof RowAtom)
-            return ((RowAtom)root).lookAtLastAtom;
+            return ((RowAtom) root).lookAtLastAtom;
         return false;
     }
 
@@ -522,16 +523,16 @@ public class TeXFormula {
      * Inserts a strut box (whitespace) with the given width, height and depth (in
      * the given unit) at the end of the current TeXFormula.
      *
-     * @param unit a unit constant (from {@link TeXConstants})
-     * @param width the width of the strut box
+     * @param unit   a unit constant (from {@link TeXConstants})
+     * @param width  the width of the strut box
      * @param height the height of the strut box
-     * @param depth the depth of the strut box
+     * @param depth  the depth of the strut box
      * @return the modified TeXFormula
      * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
+     *                              a valid unit
      */
     public TeXFormula addStrut(int unit, float width, float height, float depth)
-        throws InvalidUnitException {
+            throws InvalidUnitException {
         return add(new SpaceAtom(unit, width, height, depth));
     }
 
@@ -542,10 +543,10 @@ public class TeXFormula {
      * @param type thinmuskip, medmuskip or thickmuskip (from {@link TeXConstants})
      * @return the modified TeXFormula
      * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
+     *                              a valid unit
      */
     public TeXFormula addStrut(int type)
-        throws InvalidUnitException {
+            throws InvalidUnitException {
         return add(new SpaceAtom(type));
     }
 
@@ -553,20 +554,20 @@ public class TeXFormula {
      * Inserts a strut box (whitespace) with the given width (in widthUnits), height
      * (in heightUnits) and depth (in depthUnits) at the end of the current TeXFormula.
      *
-     * @param widthUnit a unit constant used for the width (from {@link TeXConstants})
-     * @param width the width of the strut box
+     * @param widthUnit  a unit constant used for the width (from {@link TeXConstants})
+     * @param width      the width of the strut box
      * @param heightUnit a unit constant used for the height (from TeXConstants)
-     * @param height the height of the strut box
-     * @param depthUnit a unit constant used for the depth (from TeXConstants)
-     * @param depth the depth of the strut box
+     * @param height     the height of the strut box
+     * @param depthUnit  a unit constant used for the depth (from TeXConstants)
+     * @param depth      the depth of the strut box
      * @return the modified TeXFormula
      * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
+     *                              a valid unit
      */
     public TeXFormula addStrut(int widthUnit, float width, int heightUnit,
                                float height, int depthUnit, float depth) throws InvalidUnitException {
         return add(new SpaceAtom(widthUnit, width, heightUnit, height, depthUnit,
-                                 depth));
+                depth));
     }
 
     /*
@@ -605,8 +606,8 @@ public class TeXFormula {
 
     /**
      * Apply the Builder pattern instead of using the createTeXIcon(...) factories
-     * @author Felix Natter
      *
+     * @author Felix Natter
      */
     public class TeXIconBuilder {
         private Integer style;
@@ -623,183 +624,169 @@ public class TeXFormula {
 
         /**
          * Specify the style for rendering the given TeXFormula
+         *
          * @param style the style
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setStyle(final int style)
-            {
-                this.style = style;
-                return this;
-            }
+        public TeXIconBuilder setStyle(final int style) {
+            this.style = style;
+            return this;
+        }
 
         /**
          * Specify the font size for rendering the given TeXFormula
+         *
          * @param size the size
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setSize(final float size)
-            {
-                this.size = size;
-                return this;
-            }
+        public TeXIconBuilder setSize(final float size) {
+            this.size = size;
+            return this;
+        }
 
         /**
          * Specify the font type for rendering the given TeXFormula
+         *
          * @param type the font type
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setType(final int type)
-            {
-                this.type = type;
-                return this;
-            }
+        public TeXIconBuilder setType(final int type) {
+            this.type = type;
+            return this;
+        }
 
         /**
          * Specify the background color for rendering the given TeXFormula
+         *
          * @param fgcolor the foreground color
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setFGColor(final Color fgcolor)
-            {
-                this.fgcolor = fgcolor;
-                return this;
-            }
+        public TeXIconBuilder setFGColor(final Color fgcolor) {
+            this.fgcolor = fgcolor;
+            return this;
+        }
 
         /**
          * Specify the "true values" parameter for rendering the given TeXFormula
+         *
          * @param trueValues the "true values" value
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setTrueValues(final boolean trueValues)
-            {
-                this.trueValues = trueValues;
-                return this;
-            }
+        public TeXIconBuilder setTrueValues(final boolean trueValues) {
+            this.trueValues = trueValues;
+            return this;
+        }
 
         /**
          * Specify the width of the formula (may be exact or maximum width, see {@link #setIsMaxWidth(boolean)})
+         *
          * @param widthUnit the width unit
          * @param textWidth the width
-         * @param align the alignment
+         * @param align     the alignment
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setWidth(final int widthUnit, final float textWidth, final int align)
-            {
-                this.widthUnit = widthUnit;
-                this.textWidth = textWidth;
-                this.align = align;
-                trueValues = true; // TODO: is this necessary?
-                return this;
-            }
+        public TeXIconBuilder setWidth(final int widthUnit, final float textWidth, final int align) {
+            this.widthUnit = widthUnit;
+            this.textWidth = textWidth;
+            this.align = align;
+            trueValues = true; // TODO: is this necessary?
+            return this;
+        }
 
         /**
          * Specifies whether the width is the exact or the maximum width
+         *
          * @param isMaxWidth whether the width is a maximum width
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setIsMaxWidth(final boolean isMaxWidth)
-            {
-                if (widthUnit == null)
-                {
-                    throw new IllegalStateException("Cannot set 'isMaxWidth' without having specified a width!");
-                }
-                if (isMaxWidth)
-                {
-                    // NOTE: Currently isMaxWidth==true does not work with ALIGN_CENTER or ALIGN_RIGHT (see HorizontalBox ctor)
-                    // The case (1) we don't support by setting align := ALIGN_LEFT here is this:
-                    //  \text{hello world\\hello} with align=ALIGN_CENTER (but forced to ALIGN_LEFT) and isMaxWidth==true results in:
-                    // [hello world]
-                    // [hello      ]
-                    // and NOT:
-                    // [hello world]
-                    // [   hello   ]
-                    // However, this case (2) is currently not supported anyway (ALIGN_CENTER with isMaxWidth==false):
-                    // [  hello world  ]
-                    // [  hello        ]
-                    // and NOT:
-                    // [  hello world  ]
-                    // [     hello     ]
-                    // => until (2) is solved, we stick with the hack to set align := ALIGN_LEFT!
-                    this.align = TeXConstants.ALIGN_LEFT;
-                }
-                this.isMaxWidth = isMaxWidth;
-                return this;
+        public TeXIconBuilder setIsMaxWidth(final boolean isMaxWidth) {
+            if (widthUnit == null) {
+                throw new IllegalStateException("Cannot set 'isMaxWidth' without having specified a width!");
             }
+            if (isMaxWidth) {
+                // NOTE: Currently isMaxWidth==true does not work with ALIGN_CENTER or ALIGN_RIGHT (see HorizontalBox ctor)
+                // The case (1) we don't support by setting align := ALIGN_LEFT here is this:
+                //  \text{hello world\\hello} with align=ALIGN_CENTER (but forced to ALIGN_LEFT) and isMaxWidth==true results in:
+                // [hello world]
+                // [hello      ]
+                // and NOT:
+                // [hello world]
+                // [   hello   ]
+                // However, this case (2) is currently not supported anyway (ALIGN_CENTER with isMaxWidth==false):
+                // [  hello world  ]
+                // [  hello        ]
+                // and NOT:
+                // [  hello world  ]
+                // [     hello     ]
+                // => until (2) is solved, we stick with the hack to set align := ALIGN_LEFT!
+                this.align = TeXConstants.ALIGN_LEFT;
+            }
+            this.isMaxWidth = isMaxWidth;
+            return this;
+        }
 
         /**
          * Specify the inter line spacing unit and value. NOTE: this is required for automatic linebreaks to work!
-         * @param interLineUnit the unit
+         *
+         * @param interLineUnit    the unit
          * @param interLineSpacing the value
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setInterLineSpacing(final int interLineUnit, final float interLineSpacing)
-            {
-                if (widthUnit == null)
-                {
-                    throw new IllegalStateException("Cannot set inter line spacing without having specified a width!");
-                }
-                this.interLineUnit = interLineUnit;
-                this.interLineSpacing = interLineSpacing;
-                return this;
+        public TeXIconBuilder setInterLineSpacing(final int interLineUnit, final float interLineSpacing) {
+            if (widthUnit == null) {
+                throw new IllegalStateException("Cannot set inter line spacing without having specified a width!");
             }
+            this.interLineUnit = interLineUnit;
+            this.interLineSpacing = interLineSpacing;
+            return this;
+        }
 
         /**
          * Create a TeXIcon from the information gathered by the (chained) setXXX() methods.
          * (see Builder pattern)
+         *
          * @return the TeXIcon
          */
-        public TeXIcon build()
-            {
-                if (style == null)
-                {
-                    throw new IllegalStateException("A style is required. Use setStyle()");
-                }
-                if (size == null)
-                {
-                    throw new IllegalStateException("A size is required. Use setStyle()");
-                }
-                DefaultTeXFont font = (type == null) ? new DefaultTeXFont(size) : createFont(size, type);
-                TeXEnvironment te;
-                if (widthUnit != null)
-                {
-                    te = new TeXEnvironment(style, font, widthUnit, textWidth);
-                }
-                else
-                {
-                    te = new TeXEnvironment(style, font);
-                }
-
-		if (interLineUnit != null) {
-		    te.setInterline(interLineUnit, interLineSpacing);
-		}
-
-                Box box = createBox(te);
-                TeXIcon ti;
-                if (widthUnit != null)
-                {
-                    HorizontalBox hb;
-                    if (interLineUnit != null)
-                    {
-                        float il = interLineSpacing * SpaceAtom.getFactor(interLineUnit, te);
-                        Box b = BreakFormula.split(box, te.getTextwidth(), il);
-                        hb = new HorizontalBox(b, isMaxWidth ? b.getWidth() : te.getTextwidth(), align);
-                    }
-                    else
-                    {
-                        hb = new HorizontalBox(box, isMaxWidth ? box.getWidth() : te.getTextwidth(), align);
-                    }
-                    ti = new TeXIcon(hb, size, trueValues);
-                }
-                else
-                {
-                    ti = new TeXIcon(box, size, trueValues);
-                }
-                if (fgcolor != null) {
-                    ti.setForeground(fgcolor);
-                }
-                ti.isColored = te.isColored;
-                return ti;
+        public TeXIcon build() {
+            if (style == null) {
+                throw new IllegalStateException("A style is required. Use setStyle()");
             }
+            if (size == null) {
+                throw new IllegalStateException("A size is required. Use setStyle()");
+            }
+            DefaultTeXFont font = (type == null) ? new DefaultTeXFont(size) : createFont(size, type);
+            TeXEnvironment te;
+            if (widthUnit != null) {
+                te = new TeXEnvironment(style, font, widthUnit, textWidth);
+            } else {
+                te = new TeXEnvironment(style, font);
+            }
+
+            if (interLineUnit != null) {
+                te.setInterline(interLineUnit, interLineSpacing);
+            }
+
+            Box box = createBox(te);
+            TeXIcon ti;
+            if (widthUnit != null) {
+                HorizontalBox hb;
+                if (interLineUnit != null) {
+                    float il = interLineSpacing * SpaceAtom.getFactor(interLineUnit, te);
+                    Box b = BreakFormula.split(box, te.getTextwidth(), il);
+                    hb = new HorizontalBox(b, isMaxWidth ? b.getWidth() : te.getTextwidth(), align);
+                } else {
+                    hb = new HorizontalBox(box, isMaxWidth ? box.getWidth() : te.getTextwidth(), align);
+                }
+                ti = new TeXIcon(hb, size, trueValues);
+            } else {
+                ti = new TeXIcon(box, size, trueValues);
+            }
+            if (fgcolor != null) {
+                ti.setForeground(fgcolor);
+            }
+            ti.isColored = te.isColored;
+            return ti;
+        }
     }
 
     /**
@@ -809,7 +796,7 @@ public class TeXFormula {
      * TeXConstants.STYLE_DISPLAY will be used.
      *
      * @param style a TeX style constant (from {@link TeXConstants}) to start from
-     * @param size the default TeXFont's point size
+     * @param size  the default TeXFont's point size
      * @return the created TeXIcon
      */
     public TeXIcon createTeXIcon(int style, float size) {
@@ -884,9 +871,9 @@ public class TeXFormula {
     }
 
     /**
-     * @param formula the formula
-     * @param style the style
-     * @param size the size
+     * @param formula       the formula
+     * @param style         the style
+     * @param size          the size
      * @param transparency, if true the background is transparent
      * @return the generated image
      */
@@ -911,9 +898,9 @@ public class TeXFormula {
     }
 
     /**
-     * @param formula the formula
-     * @param style the style
-     * @param size the size
+     * @param formula       the formula
+     * @param style         the style
+     * @param size          the size
      * @param transparency, if true the background is transparent
      * @return the generated image
      */
@@ -987,14 +974,14 @@ public class TeXFormula {
      * Sets a fixed left and right type of the current TeXFormula. This has an influence
      * on the glue that will be inserted before and after this TeXFormula.
      *
-     * @param leftType atom type constant (from {@link TeXConstants})
+     * @param leftType  atom type constant (from {@link TeXConstants})
      * @param rightType atom type constant (from TeXConstants)
      * @return the modified TeXFormula
      * @throws InvalidAtomTypeException if the given integer value does not represent
-     *                  a valid atom type
+     *                                  a valid atom type
      */
     public TeXFormula setFixedTypes(int leftType, int rightType)
-        throws InvalidAtomTypeException {
+            throws InvalidAtomTypeException {
         root = new TypedAtom(leftType, rightType, root);
         return this;
     }
@@ -1005,7 +992,7 @@ public class TeXFormula {
      * @param name the name of the predefined TeXFormula
      * @return a copy of the predefined TeXFormula
      * @throws FormulaNotFoundException if no predefined TeXFormula is found with the
-     *                  given name
+     *                                  given name
      */
     public static TeXFormula get(String name) throws FormulaNotFoundException {
         TeXFormula formula = predefinedTeXFormulas.get(name);

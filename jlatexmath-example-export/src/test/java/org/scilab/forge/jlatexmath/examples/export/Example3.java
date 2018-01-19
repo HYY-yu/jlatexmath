@@ -76,10 +76,6 @@ public class Example3 {
         try {
             Convert.toSVG(latex, "Example3.svg", false);
             Convert.toSVG(latex, "Example3_shaped.svg", true);
-            Convert.SVGTo("Example3.svg", "Example3.pdf", Convert.PDF);
-            Convert.SVGTo("Example3_shaped.svg", "Example3_shaped.pdf", Convert.PDF);
-            Convert.SVGTo("Example3.svg", "Example3.ps", Convert.PS);
-            Convert.SVGTo("Example3.svg", "Example3.eps", Convert.EPS);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

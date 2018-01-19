@@ -17,10 +17,6 @@ import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.fop.render.ps.EPSTranscoder;
-import org.apache.fop.render.ps.PSTranscoder;
-import org.apache.fop.svg.AbstractFOPTranscoder;
-import org.apache.fop.svg.PDFTranscoder;
 import org.scilab.forge.jlatexmath.DefaultTeXFont;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
@@ -64,38 +60,5 @@ public class Convert {
         g2.stream(out, useCSS);
         svgs.flush();
         svgs.close();
-    }
-
-    public static void SVGTo(String inSVG, String out, int type) {
-        AbstractFOPTranscoder trans;
-        switch (type) {
-        case PDF:
-            trans = new PDFTranscoder();
-            break;
-        case PS:
-            trans = new PSTranscoder();
-            break;
-        case EPS:
-            trans = new EPSTranscoder();
-            break;
-        default:
-            trans = null;
-        }
-
-        try {
-            String filename = "target/" + inSVG;
-            System.out.println("transcoding "
-                    + filename);
-            TranscoderInput input = new TranscoderInput(new FileInputStream(filename));
-            OutputStream os = new FileOutputStream("target/" + out);
-            TranscoderOutput output = new TranscoderOutput(os);
-            trans.transcode(input, output);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            System.out.println(
-                    "Problem when exporting " + inSVG + " to " + out + "!\n" + e.toString());
-            throw new RuntimeException(e);
-        }
     }
 }

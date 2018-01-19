@@ -119,6 +119,8 @@ public class PredefMacros {
         NewCommandMacro.addNewCommand("L", "\\mathrm{\\polishlcross L}", 0);
         NewCommandMacro.addNewCommand("l", "\\mathrm{\\polishlcross l}", 0);
         NewCommandMacro.addNewCommand("Join", "\\mathop{\\rlap{\\ltimes}\\rtimes}", 0);
+
+        //Add
         NewCommandMacro.addNewCommand("conditionarrow", "\\mathrel{\\mathop{#1}^{#2}_{#3}}", 3);
         NewCommandMacro.addNewCommand("null", "\\hbox{}", 0);
         NewCommandMacro.addNewCommand("mathstrut", "\\vphantom(", 0);

@@ -43,7 +43,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
-        <fop.version>1.0</fop.version>
         <junit.version>4.12</junit.version>
         <jar.plugin.version>3.0.2</jar.plugin.version>
         <build.helper.plugin.version>1.12</build.helper.plugin.version>
@@ -53,15 +52,8 @@
     </properties>
 
     <modules>
-        <module>jlatexmath-font-cyrillic</module>
-        <module>jlatexmath-font-greek</module>
         <module>jlatexmath</module>
-        <module>jlatexmath-fop</module>
-        <module>jlatexmath-example-giws</module>
         <module>jlatexmath-example-export</module>
-        <!-- require a dummy artifact so can ignore deployment of previous two example modules -->
-        <!-- see https://issues.sonatype.org/browse/NEXUS-9138 -->
-        <module>jlatexmath-ignore</module>
     </modules>
 
     <build>
