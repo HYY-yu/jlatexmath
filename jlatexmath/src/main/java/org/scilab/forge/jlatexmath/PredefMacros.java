@@ -81,6 +81,7 @@ public class PredefMacros {
         NewEnvironmentMacro.addNewEnvironment("gathered", "\\gathered@@env{", "}", 0);
         NewEnvironmentMacro.addNewEnvironment("math", "\\(", "\\)", 0);
         NewEnvironmentMacro.addNewEnvironment("displaymath", "\\[", "\\]", 0);
+
         NewCommandMacro.addNewCommand("operatorname", "\\mathop{\\mathrm{#1}}\\nolimits ", 1);
         NewCommandMacro.addNewCommand("DeclareMathOperator", "\\newcommand{#1}{\\mathop{\\mathrm{#2}}\\nolimits}", 2);
         NewCommandMacro.addNewCommand("substack", "{\\scriptstyle\\begin{array}{c}#1\\end{array}}", 1);
@@ -118,6 +119,12 @@ public class PredefMacros {
         NewCommandMacro.addNewCommand("L", "\\mathrm{\\polishlcross L}", 0);
         NewCommandMacro.addNewCommand("l", "\\mathrm{\\polishlcross l}", 0);
         NewCommandMacro.addNewCommand("Join", "\\mathop{\\rlap{\\ltimes}\\rtimes}", 0);
+        NewCommandMacro.addNewCommand("conditionarrow", "\\mathrel{\\mathop{#1}^{#2}_{#3}}", 3);
+        NewCommandMacro.addNewCommand("null", "\\hbox{}", 0);
+        NewCommandMacro.addNewCommand("mathstrut", "\\vphantom(", 0);
+        NewCommandMacro.addNewCommand("eqalign", "\\nointerline{\\cr#1\\cr}", 1);
+        NewCommandMacro.addNewCommand("matrix", "\\eqalign{#1}", 1);
+        NewCommandMacro.addNewCommand("cases", "\\left\\{\\eqalign{#1}\\right.", 1);
     }
 
     public static final Atom fcscore_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -140,13 +147,13 @@ public class PredefMacros {
     public static final Atom longdiv_macro(final TeXParser tp, final String[] args) throws ParseException {
         try {
             long dividend = Long.valueOf(args[1]);
-            long divisor = Long.valueOf(args[2]); 
+            long divisor = Long.valueOf(args[2]);
             return new LongdivAtom(divisor, dividend);
         } catch (NumberFormatException e) {
             throw new ParseException("Divisor and dividend must be integer numbers");
         }
     }
-    
+
     public static final Atom st_macro(final TeXParser tp, final String[] args) throws ParseException {
         return new StrikeThroughAtom(new TeXFormula(tp, args[1], false).root);
     }
@@ -177,7 +184,7 @@ public class PredefMacros {
 
     public static final Atom hvspace_macro(final TeXParser tp, final String[] args) throws ParseException {
         int i;
-        for (i = 0; i < args[1].length() && !Character.isLetter(args[1].charAt(i)); i++);
+        for (i = 0; i < args[1].length() && !Character.isLetter(args[1].charAt(i)); i++) ;
         float f = 0;
         try {
             f = Float.parseFloat(args[1].substring(0, i));
@@ -227,6 +234,17 @@ public class PredefMacros {
         }
 
         return new RuleAtom((int) winfo[0], winfo[1], (int) hinfo[0], hinfo[1], (int) rinfo[0], -rinfo[1]);
+    }
+
+    public static final Atom root_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        String num = tp.getGroup("\\root", "\\of");
+        Atom atom = tp.getArgument();
+        if (num.equals("")) {
+            return new NthRoot(atom, null);
+        } else {
+            return new NthRoot(atom, new TeXFormula(tp, num, false).root);
+        }
     }
 
     /* Thanks to Juan Enrique Escobar Robles for this macro */
@@ -341,10 +359,10 @@ public class PredefMacros {
 
         Atom left = new TeXFormula(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
-            left = ((BigDelimiterAtom)left).delim;
+            left = ((BigDelimiterAtom) left).delim;
         Atom right = new TeXFormula(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
-            right = ((BigDelimiterAtom)right).delim;
+            right = ((BigDelimiterAtom) right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
             return new FencedAtom(new FractionAtom(num, denom, true), (SymbolAtom) left, (SymbolAtom) right);
         }
@@ -373,10 +391,10 @@ public class PredefMacros {
 
         Atom left = new TeXFormula(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
-            left = ((BigDelimiterAtom)left).delim;
+            left = ((BigDelimiterAtom) left).delim;
         Atom right = new TeXFormula(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
-            right = ((BigDelimiterAtom)right).delim;
+            right = ((BigDelimiterAtom) right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
             return new FencedAtom(new FractionAtom(num, denom, false), (SymbolAtom) left, (SymbolAtom) right);
         }
@@ -395,11 +413,11 @@ public class PredefMacros {
     public static final Atom brack_macro(final TeXParser tp, final String[] args) throws ParseException {
         return choose_brackets("lsqbrack", "rsqbrack", tp, args);
     }
-    
+
     public static final Atom bangle_macro(final TeXParser tp, final String[] args) throws ParseException {
         return choose_brackets("langle", "rangle", tp, args);
     }
-    
+
     public static final Atom brace_macro(final TeXParser tp, final String[] args) throws ParseException {
         return choose_brackets("lbrace", "rbrace", tp, args);
     }
@@ -445,10 +463,10 @@ public class PredefMacros {
 
         Atom left = new TeXFormula(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
-            left = ((BigDelimiterAtom)left).delim;
+            left = ((BigDelimiterAtom) left).delim;
         Atom right = new TeXFormula(tp, args[2], false).root;
         if (right instanceof BigDelimiterAtom)
-            right = ((BigDelimiterAtom)right).delim;
+            right = ((BigDelimiterAtom) right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
             return new FencedAtom(new FractionAtom(num, denom, (int) dim[0], dim[1]), (SymbolAtom) left, (SymbolAtom) right);
         }
@@ -511,44 +529,44 @@ public class PredefMacros {
     public static final Atom accentbis_macros(final TeXParser tp, final String[] args) throws ParseException {
         String acc = "";
         switch (args[0].charAt(0)) {
-        case '~' :
-            acc = "tilde";
-            break;
-        case '\'' :
-            acc = "acute";
-            break;
-        case '^' :
-            acc = "hat";
-            break;
-        case '\"' :
-            acc = "ddot";
-            break;
-        case '`' :
-            acc = "grave";
-            break;
-        case '=' :
-            acc = "bar";
-            break;
-        case '.' :
-            acc = "dot";
-            break;
-        case 'u' :
-            acc = "breve";
-            break;
-        case 'v' :
-            acc = "check";
-            break;
-        case 'H' :
-            acc = "doubleacute";
-            break;
-        case 't' :
-            acc = "tie";
-            break;
-        case 'r' :
-            acc = "mathring";
-            break;
-        case 'U' :
-            acc = "cyrbreve";
+            case '~':
+                acc = "tilde";
+                break;
+            case '\'':
+                acc = "acute";
+                break;
+            case '^':
+                acc = "hat";
+                break;
+            case '\"':
+                acc = "ddot";
+                break;
+            case '`':
+                acc = "grave";
+                break;
+            case '=':
+                acc = "bar";
+                break;
+            case '.':
+                acc = "dot";
+                break;
+            case 'u':
+                acc = "breve";
+                break;
+            case 'v':
+                acc = "check";
+                break;
+            case 'H':
+                acc = "doubleacute";
+                break;
+            case 't':
+                acc = "tie";
+                break;
+            case 'r':
+                acc = "mathring";
+                break;
+            case 'U':
+                acc = "cyrbreve";
         }
 
         return new AccentedAtom(new TeXFormula(tp, args[1], false).root, acc);
@@ -669,7 +687,7 @@ public class PredefMacros {
     }
 
     public static final Atom mathop_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TypedAtom at =  new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, new TeXFormula(tp, args[1], false).root);
+        TypedAtom at = new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, new TeXFormula(tp, args[1], false).root);
         at.type_limits = TeXConstants.SCRIPT_NORMAL;
         return at;
     }
@@ -744,13 +762,13 @@ public class PredefMacros {
         String grp = tp.getGroup("\\left", "\\right");
         Atom left = new TeXFormula(tp, args[1], false).root;
         if (left instanceof BigDelimiterAtom)
-            left = ((BigDelimiterAtom)left).delim;
+            left = ((BigDelimiterAtom) left).delim;
         Atom right = tp.getArgument();
         if (right instanceof BigDelimiterAtom)
-            right = ((BigDelimiterAtom)right).delim;
+            right = ((BigDelimiterAtom) right).delim;
         if (left instanceof SymbolAtom && right instanceof SymbolAtom) {
             TeXFormula tf = new TeXFormula(tp, grp, false);
-            return new FencedAtom(tf.root, (SymbolAtom)left, tf.middle, (SymbolAtom)right);
+            return new FencedAtom(tf.root, (SymbolAtom) left, tf.middle, (SymbolAtom) right);
         }
 
         RowAtom ra = new RowAtom();
@@ -828,7 +846,7 @@ public class PredefMacros {
     public static final Atom multicolumn_macro(final TeXParser tp, final String[] args) throws ParseException {
         int n = Integer.parseInt(args[1]);
         tp.addAtom(new MulticolumnAtom(n, args[2], new TeXFormula(tp, args[3]).root));
-        ((ArrayOfAtoms)tp.formula).addCol(n);
+        ((ArrayOfAtoms) tp.formula).addCol(n);
         return null;
     }
 
@@ -839,7 +857,7 @@ public class PredefMacros {
             f = Float.parseFloat(args[2]);
         }
         tp.addAtom(new HdotsforAtom(n, f));
-        ((ArrayOfAtoms)tp.formula).addCol(n);
+        ((ArrayOfAtoms) tp.formula).addCol(n);
         return null;
     }
 
@@ -1038,7 +1056,7 @@ public class PredefMacros {
         Atom at = new UnderOverAtom(SymbolAtom.get(TeXFormula.symbolMappings['=']), new ScaleAtom(SymbolAtom.get(TeXFormula.symbolMappings['?']), 0.75f), TeXConstants.UNIT_MU, 2.5f, true, true);
         return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);
     }
-    
+
     public static final Atom stackrel_macro(final TeXParser tp, final String[] args) throws ParseException {
         Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);
         return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);
@@ -1696,8 +1714,8 @@ public class PredefMacros {
     }
 
     public static final Atom romannumeral_macro(final TeXParser tp, final String[] args) throws ParseException {
-        int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] letters = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] numbers = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] letters = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         String roman = "";
         int num = Integer.parseInt(args[1].trim());
         for (int i = 0; i < numbers.length; i++) {
@@ -1759,6 +1777,11 @@ public class PredefMacros {
         }
 
         return new SpaceAtom(type);
+    }
+
+    public static final Atom enskip_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        return new SpaceAtom(TeXConstants.UNIT_EM, 0.5f, 0f, 0f);
     }
 
     public static final Atom surd_macro(final TeXParser tp, final String[] args) throws ParseException {
@@ -1854,7 +1877,7 @@ public class PredefMacros {
         while ((pos = str.indexOf("$")) != -1) {
             if (pos < str.length() - 1) {
                 start = pos;
-                while (++start < str.length() && Character.isLetter(str.charAt(start)));
+                while (++start < str.length() && Character.isLetter(str.charAt(start))) ;
                 String key = str.substring(pos + 1, start);
                 String value = map.get(key);
                 if (value != null) {
@@ -1873,5 +1896,75 @@ public class PredefMacros {
         str = buffer.toString();
 
         return new TeXFormula(tp, str).root;
+    }
+
+    public static final Atom hbox_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        float length;
+        if (args[1].length() != 0) {
+            int i = args[1].indexOf("em");
+            if (i > 0) {
+                length = Float.parseFloat(args[1].substring(0, i));
+                return new FillAtom(length, args[2]);
+            }
+            return null;
+        }
+
+        return new TeXFormula(tp, args[2], false).root;
+    }
+
+    public static final Atom noalign_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        if (args[1] != null) {
+            return new TeXFormula(tp, args[1], false).root;
+        } else {
+            return null;
+        }
+    }
+
+    public static final Atom halign_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        StringBuffer parseString = new StringBuffer(args[1]);
+        int position1 = parseString.indexOf("\\cr");
+        if (position1 != -1) {
+            int position2 = parseString.indexOf("\\cr", position1 + 3);
+            if (position2 < 0) {
+                return null;
+            }
+            String opt = parseString.substring(position1, position2);
+            String[] opts = opt.split("&");
+            StringBuffer buffer = new StringBuffer("{|");
+            for (int i = 0; i < opts.length; i++) {
+                buffer.append("c|");
+            }
+            buffer.append("}");
+            parseString.replace(0, position1, new String(buffer));
+        }
+        parseString = new StringBuffer("\\begin{tabular}").append(parseString).append("\\end{tabular}");
+
+        return new TeXFormula(tp, parseString.toString(), true).root;
+    }
+
+    public static final Atom nointerline_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        Atom atom = new TeXFormula(tp, args[1], false).root;
+        return atom;
+    }
+
+    public static final Atom uppercase_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        if (args[1].equals("\\expandafter")) {
+            String s = tp.getOptsArgs(1, 0)[1];
+            s = s.replaceAll("\\\\romannumeral", "\\\\upromannumeral");
+            return new TeXFormula(tp, s, false).root;
+        } else {
+            args[1].toUpperCase();
+            return new TeXFormula(tp, args[1], false).root;
+        }
+    }
+
+    public static Atom time_macro(final TeXParser tp, final String[] args)
+            throws ParseException {
+        return new TeXFormula(tp, "\\times", false).root;
     }
 }

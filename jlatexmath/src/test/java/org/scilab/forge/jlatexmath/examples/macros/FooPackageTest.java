@@ -76,7 +76,7 @@ public class FooPackageTest {
         TeXFormula.addPredefinedCommands(is);
         String latex = "\\begin{array}{l}";
         latex += "\\fooA{\\pi}{C}\\\\";
-        latex += "\\mbox{A red circle }\\fooB{75.3}\\\\";
+        latex += "\\mbox{A red circle $${\\rm N_2+3H_2\\conditionarrow{\\matrix{\\hbox to 6em{\\reversiblefill}}}{高温、高压}{催化剂}2NH_3}$$ }\\fooB{75.3}\\\\";
         latex += "\\mbox{A red disk }\\fooC[abc]{126.7}\\\\";
         latex += "\\mbox{An other red circle }\\fooD{159.81}[ab]";
         latex += "\\end{array}";

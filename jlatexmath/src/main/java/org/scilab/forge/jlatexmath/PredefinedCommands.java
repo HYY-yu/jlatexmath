@@ -47,7 +47,8 @@ package org.scilab.forge.jlatexmath;
 
 final class PredefinedCommands {
 
-    PredefinedCommands() { }
+    PredefinedCommands() {
+    }
 
     static {
         MacroInfo.Commands.put("newcommand", new PredefMacroInfo(0, 2, 2));
@@ -212,6 +213,12 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("Bigr", new PredefMacroInfo(159, 1));
         MacroInfo.Commands.put("biggr", new PredefMacroInfo(160, 1));
         MacroInfo.Commands.put("Biggr", new PredefMacroInfo(161, 1));
+
+        MacroInfo.Commands.put("bigm", new PredefMacroInfo(150, 1));
+        MacroInfo.Commands.put("biggm", new PredefMacroInfo(152, 1));
+        MacroInfo.Commands.put("Bigm", new PredefMacroInfo(151, 1));
+        MacroInfo.Commands.put("Biggm", new PredefMacroInfo(153, 1));
+
         MacroInfo.Commands.put("displaystyle", new PredefMacroInfo(162, 0));
         MacroInfo.Commands.put("textstyle", new PredefMacroInfo(163, 0));
         MacroInfo.Commands.put("scriptstyle", new PredefMacroInfo(164, 0));
@@ -257,6 +264,9 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("DeclareMathSizes", new PredefMacroInfo(204, 4));
         MacroInfo.Commands.put("magnification", new PredefMacroInfo(205, 1));
         MacroInfo.Commands.put("hline", new PredefMacroInfo(206, 0));
+
+        MacroInfo.Commands.put("hrule", new PredefMacroInfo(206, 0));
+
         MacroInfo.Commands.put("tiny", new PredefMacroInfo(207, 0));
         MacroInfo.Commands.put("scriptsize", new PredefMacroInfo(208, 0));
         MacroInfo.Commands.put("footnotesize", new PredefMacroInfo(209, 0));
@@ -299,6 +309,9 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("roman", new PredefMacroInfo(246, 1));
         MacroInfo.Commands.put("Roman", new PredefMacroInfo(247, 1));
         MacroInfo.Commands.put("textcircled", new PredefMacroInfo(248, 1));
+
+        MacroInfo.Commands.put("circled", new PredefMacroInfo(248, 1));
+
         MacroInfo.Commands.put("textsc", new PredefMacroInfo(249, 1));
         MacroInfo.Commands.put("sc", new PredefMacroInfo(250, 0));
         MacroInfo.Commands.put(",", new PredefMacroInfo(251, 0));
@@ -334,5 +347,19 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("bangle", new PredefMacroInfo(281, 0));
         MacroInfo.Commands.put("brace", new PredefMacroInfo(282, 0));
         MacroInfo.Commands.put("brack", new PredefMacroInfo(283, 0));
+
+        //New Add
+        MacroInfo.Commands.put("hbox", new PredefMacroInfo(301, 2));
+        MacroInfo.Commands.put("root", new PredefMacroInfo(302, 0));
+        MacroInfo.Commands.put("enskip", new PredefMacroInfo(303, 0));
+        MacroInfo.Commands.put("noalign", new PredefMacroInfo(304, 1));
+        MacroInfo.Commands.put("halign", new PredefMacroInfo(305, 1));
+        MacroInfo.Commands.put("nointerline", new PredefMacroInfo(306, 1));
+        MacroInfo.Commands.put("romannumeral", new PredefMacroInfo(307, 0));
+        MacroInfo.Commands.put("upromannumeral", new PredefMacroInfo(307, 0));
+        MacroInfo.Commands.put("uppercase", new PredefMacroInfo(309, 1));
+        MacroInfo.Commands.put("time", new PredefMacroInfo(310, 0));
+
+        MacroInfo.Commands.put("strut", new PredefMacroInfo(1000, 0));
     }
 }
